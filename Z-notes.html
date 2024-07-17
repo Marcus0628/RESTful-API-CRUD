@@ -1,0 +1,156 @@
+<!--
+<<Create package.json>>
+npm init -y
+
+<<install dependencies>>
+1) install express and mongoose(allow us interact with MongoDB easily)
+
+npm i express mongoose
+
+2) development dependencies
+npm i --save-dev dotenv nodemon
+
+--save-dev: make development dependencies that do not get installed in production.
+
+dotenv: allow us to pull an environment variables from a dotenv file.
+
+nodemon: allow us to refresh server everytime we make changes.
+
+<<In package.json scripts, change text to:>>
+"devStart": "nodemon server.js" 
+
+allow us to start our server using nodemon
+
+
+
+
+
+
+
+
+<<Create package.json>>
+npm init -y
+
+<<install dependencies>>
+Install Express framework
+npm i express
+
+<<Create Backend>>
+Step 1: Require necessary modules
+const express = require('express');
+
+Step 2: Create an instance of the Express application
+const app = express();
+
+app.get(path, callback)
+- define a route handler for GET requests to a specific path
+
+Example: 
+app.get('/', (req, res) => {
+  res.send('Hello from Node API');
+});
+
+app.listen(port, [hostname], [backlog], [callback])
+- hostname, backlog and callback is optional
+
+Example:
+app.listen(3000, () => {
+  console.log('Server is running on port 3000');
+});
+
+
+* .gitignore (node_modules)
+
+* npm i nodemon 
+- nodemon: allow us to refresh server everytime we make changes.
+
+* In package.json scripts add
+"dev": "nodemon index.js" 
+
+<<MongoDB Setup>>
+npm install mongodb
+npm i mongoose
+
+Connect MongoDB
+Example:
+const mongoose = require('mongoose');
+
+mongoose
+  .connect(
+    'mongodb+srv://liuyap0628:lzx63533@backenddb.kogqynb.mongodb.net/Node-API?retryWrites=true&w=majority&appName=BackendDB'
+  )
+  .then(() => {
+    console.log('Connected to database!');
+    app.listen(port, () => {
+      console.log('Server is running on port 3000');
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+    console.log('Connection failed!');
+  });
+
+  Model
+  - use to store data into our database
+
+  mongoose.Schema({},{});
+
+
+  mongoose.model("", mongoose.Schema)
+  - allow MongoDB to use it.
+  - "" name in the MongoDB, have to be singular, will automatically add s and tolowercase in MongoDB.
+  - variable of the mongoose.Schema.
+
+  Example:
+  const mongoose = require('mongoose');
+
+  const ProductSchema = mongoose.Schema(
+    {
+      name: {
+        type: String,
+        require: [true, 'Please enter product name'],
+      },
+
+      quantity: {
+        type: Number,
+        require: true,
+        default: 0,
+      },
+
+      price: {
+        type: Number,
+        require: true,
+        default: 0,
+      },
+
+      image: {
+        type: String,
+        require: false,
+      },
+    },
+    {
+      timestamps: true, //allow us to have two more extra fields(created and updated)
+    }
+  );
+
+  const Product = mongoose.model('Product', ProductSchema); //allow MongoDB to use it
+
+  module.exports = Product;
+
+
+  Middleware
+  app.use(express.json())
+  - not allowed to pass JSON to Nodejs by default
+  - parse JSON data from incoming request bodies and make it available under the req.body property.
+
+  app.use(express.urlencoded({ extended: false }));
+  - Form URL encoded
+  - allow Express to automatically parse URL-encoded data and make it accessible via req.body
+
+   GET READ    (.find({}), .findById())
+  POST CREATE  (.create())
+   PUT UPDATE  
+DELETE DESTROY
+
+*PUT/PATCH also can
+-->
